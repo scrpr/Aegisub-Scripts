@@ -1,12 +1,12 @@
 script_name = ("Pangu - 自动插入空白")
 script_description = ("自动在选中行中将所有的中文与半角英文、数字、符号之间插入空白")
 script_author = "Scrpr"
-script_version = "2"
+script_version = "3"
 
 re = require 'aegisub.re'
 unicode = require 'aegisub.unicode'
 
-CUSTOM_SPACE = [[{\\fscx25}　{\\fscx100}]]
+CUSTOM_SPACE = [[{\\fscx50} {\\fscx100}]]
 -- SPACE_SPACED = [[\\{\\\\fscx25\}　\\{\\\\fscx100\\}]]
 SPACE = [[ YJSP ㋿ ]]
 SPACE_SPACED = [[YJSP ㋿]]
