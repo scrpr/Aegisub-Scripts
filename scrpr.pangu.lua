@@ -56,6 +56,8 @@ S_A = re.compile([[(%)([A-Za-z])]])
 
 MIDDLE_DOT = re.compile([[((?:[ ]|]]..SPACE_SPACED..[[)*)([·•‧])((?:[ ]|]]..SPACE_SPACED..[[)*)]])
 
+INLINE_TAGS = re.compile('(\\\\[Nnh])(?:[ ]|'..SPACE_SPACED..')*')
+
 function convertToFullWidth_CJK(symbols)
     --- aegisub.debug.out("Processing symbol"..symbols.."\n")
 
@@ -179,6 +181,7 @@ function spacing(text)
 
     new_text = MIDDLE_DOT:sub(new_text, "・")
     --- aegisub.debug.out("MIDDLE_DOT"..new_text.."\n")
+    new_text = INLINE_TAGS:sub(new_text, "\\1")
 
     return new_text
 end
