@@ -1,7 +1,5 @@
-﻿local tr = aegisub.gettext
-
-script_name = tr("转换为全角片假")
-script_description = tr("将选中行内半角片假名转换为全角片假名")
+﻿script_name = ("Make Katakana Fullwidth - 转换为全角片假")
+script_description = ("将选中行内半角片假名转换为全角片假名")
 script_author = "Scrpr"
 script_version = "2"
 
@@ -133,7 +131,7 @@ function make_fullwidth(subtitles, selected_lines, active_line)
 		l.text = newtext
 		subtitles[i] = l
 	end
-	aegisub.set_undo_point(tr"Make fullwidth")
+	aegisub.set_undo_point("Make fullwidth")
 end
 
-aegisub.register_macro(script_name, tr"将选中行内半角片假名转换为全角片假名", make_fullwidth)
+aegisub.register_macro(script_name, "将选中行内半角片假名转换为全角片假名", make_fullwidth)
