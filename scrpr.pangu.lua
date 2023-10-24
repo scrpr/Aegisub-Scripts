@@ -1,7 +1,7 @@
 script_name = ("Pangu - 自动插入空白")
 script_description = ("自动在选中行中将所有的中文与半角英文、数字、符号之间插入空白")
 script_author = "Scrpr"
-script_version = "1"
+script_version = "2"
 
 re = require 'aegisub.re'
 unicode = require 'aegisub.unicode'
@@ -104,7 +104,7 @@ end
 
 function spacing(text)
     if (type(text) ~= "string") then
-        --- aegisub.debug.out(2, string.format("spacing(text) only accepts string but got %s", type(text)).."\n")
+        aegisub.debug.out(2, string.format("spacing(text) only accepts string but got %s", type(text)).."\n")
         return text
     end
 
@@ -116,7 +116,7 @@ function spacing(text)
 
     new_text = CONVERT_TO_FULLWIDTH_CJK_SYMBOLS_CJK:sub(new_text, convertToFullWidth_CJK)
     new_text = CONVERT_TO_FULLWIDTH_CJK_SYMBOLS:sub(new_text, convertToFullWidth)
-    --- aegisub.debug.out("CONVERT_TO_FULLWIDTH_CJK_SYMBOLS"..new_text.."\n")
+    -- aegisub.debug.out("CONVERT_TO_FULLWIDTH_CJK_SYMBOLS"..new_text.."\n")
     new_text = DOTS_CJK:sub(new_text, "\\1"..SPACE.."\\2")
     --- aegisub.debug.out("DOTS_CJK"..new_text.."\n")
     new_text = FIX_CJK_COLON_ANS:sub(new_text, "\\1：\\2")
@@ -186,14 +186,14 @@ end
 
 
 function processing(subtitles, selected_lines, active_line)
-    ASS_TAGS = re.compile('(?:\\{.*\\})*(.*)')
+    ASS_TAGS = re.compile([[[^\{\}]*(?=(?:[^\}]*\{[^\{]*\})*[^\{\}]*$)]])
     LAST_PROCESSED = re.compile(CUSTOM_SPACE)
     ADD_CUSTOM = re.compile(SPACE.."?")
     for z, i in ipairs(selected_lines) do
         local l = subtitles[i]
         line_new_text = LAST_PROCESSED:sub(l.text, "")
         line_new_text = ASS_TAGS:sub(line_new_text, spacing)
-        -- --- aegisub.debug.out("New text is "..line_new_text)
+        -- aegisub.debug.out("New text is "..line_new_text)
         line_new_text = ADD_CUSTOM:sub(line_new_text, CUSTOM_SPACE)
         l.text = line_new_text
         subtitles[i] = l
