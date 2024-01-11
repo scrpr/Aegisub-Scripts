@@ -1,7 +1,7 @@
 ﻿script_name = ("Make Katakana Fullwidth - 转换为全角片假")
 script_description = ("将选中行内半角片假名转换为全角片假名")
 script_author = "Scrpr"
-script_version = "2"
+script_version = "3"
 
 include("unicode.lua")
 
@@ -93,11 +93,43 @@ special = {
     ['ﾎﾟ'] = 'ポ',
 }
 
+bad = {
+    ['カﾞ'] = 'ガ',
+    ['キﾞ'] = 'ギ',
+    ['クﾞ'] = 'グ',
+    ['ケﾞ'] = 'ゲ',
+    ['コﾞ'] = 'ゴ',
+    ['サﾞ'] = 'ザ',
+    ['シﾞ'] = 'ジ',
+    ['スﾞ'] = 'ズ',
+    ['セﾞ'] = 'ゼ',
+    ['ソﾞ'] = 'ゾ',
+    ['タﾞ'] = 'ダ',
+    ['チﾞ'] = 'ヂ',
+    ['ツﾞ'] = 'ヅ',
+    ['テﾞ'] = 'デ',
+    ['トﾞ'] = 'ド',
+    ['ハﾞ'] = 'バ',
+    ['ヒﾞ'] = 'ビ',
+    ['フﾞ'] = 'ブ',
+    ['ヘﾞ'] = 'ベ',
+    ['ホﾞ'] = 'ボ',
+    ['ハﾟ'] = 'パ',
+    ['ヒﾟ'] = 'ピ',
+    ['フﾟ'] = 'プ',
+    ['ヘﾟ'] = 'ペ',
+    ['ホﾟ'] = 'ポ',
+}
+
 function make_fullwidth(subtitles, selected_lines, active_line)
 	for z, i in ipairs(selected_lines) do
 		local l = subtitles[i]
 
         for k, v in pairs(special) do
+            l.text = string.gsub(l.text, k, v)
+        end
+
+        for k, v in pairs(bad) do
             l.text = string.gsub(l.text, k, v)
         end
 		
