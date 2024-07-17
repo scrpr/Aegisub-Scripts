@@ -189,7 +189,7 @@ end
 
 
 function processing(subtitles, selected_lines, active_line)
-    ASS_TAGS = re.compile([[[^\{\}]*(?=(?:[^\}]*\{[^\{]*\})*[^\{\}]*$)]])
+    ASS_TAGS = re.compile([[(?:\{.*?\})([^\{]+)]])
     LAST_PROCESSED = re.compile(CUSTOM_SPACE)
     ADD_CUSTOM = re.compile(SPACE.."?")
     for z, i in ipairs(selected_lines) do
