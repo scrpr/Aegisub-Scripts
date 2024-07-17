@@ -61,7 +61,7 @@ INLINE_TAGS = re.compile('(?:[ ]|'..SPACE_SPACED..')*(\\\\[Nnh])(?:[ ]|'..SPACE_
 function convertToFullWidth_CJK(symbols)
     --- aegisub.debug.out("Processing symbol"..symbols.."\n")
 
-    new_symbols = re.sub(symbols, "~", "～")
+    local new_symbols = re.sub(symbols, "~", "～")
     --- aegisub.debug.out(new_symbols.."\n")
     new_symbols = re.sub(new_symbols, "!", "！")
     --- aegisub.debug.out(new_symbols.."\n")
@@ -84,7 +84,7 @@ end
 function convertToFullWidth(symbols)
     --- aegisub.debug.out("Processing symbol"..symbols.."\n")
 
-    new_symbols = re.sub(symbols, "~", "～")
+    local new_symbols = re.sub(symbols, "~", "～")
     --- aegisub.debug.out(new_symbols.."\n")
     new_symbols = re.sub(new_symbols, "!", "！")
     --- aegisub.debug.out(new_symbols.."\n")
@@ -114,7 +114,7 @@ function spacing(text)
         return text
     end
 
-    new_text = text
+    local new_text = text
 
     new_text = CONVERT_TO_FULLWIDTH_CJK_SYMBOLS_CJK:sub(new_text, convertToFullWidth_CJK)
     new_text = CONVERT_TO_FULLWIDTH_CJK_SYMBOLS:sub(new_text, convertToFullWidth)
@@ -194,7 +194,7 @@ function processing(subtitles, selected_lines, active_line)
     ADD_CUSTOM = re.compile(SPACE.."?")
     for z, i in ipairs(selected_lines) do
         local l = subtitles[i]
-        line_new_text = LAST_PROCESSED:sub(l.text, "")
+        local line_new_text = LAST_PROCESSED:sub(l.text, "")
         line_new_text = ASS_TAGS:sub(line_new_text, spacing)
         -- aegisub.debug.out("New text is "..line_new_text)
         line_new_text = ADD_CUSTOM:sub(line_new_text, CUSTOM_SPACE)
