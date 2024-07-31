@@ -6,7 +6,7 @@ PROMPT_CHINESE = '''
 context: [context]
 keywords: [keywords]
 
-说话人|文字|id
+说话人（可以为空）|文字（可以为空）|id
 ```
 
 输出格式如下：

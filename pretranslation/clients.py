@@ -25,8 +25,8 @@ def call_llm(messages, model, frequency_penalty=0.0):
     return response.choices[0].message.content
 
 def call_llm_instructor(messages, model, frequency_penalty=0.0):
-    instructor_mode = instructor.Mode.JSON
-    if model.startswith("claude") or model.startswith("deepseek"):
+    instructor_mode = instructor.Mode.FUNCTIONS
+    if model.startswith("claude") or model.startswith("deepseek") or model.startswith("gemini"):
         instructor_mode = instructor.Mode.JSON
     client = instructor.from_openai(OpenAI(base_url=config.OPENAI_URL, api_key=config.OPENAI_KEY), mode=instructor_mode)
     print(f"Calling {model} using:\n" + str(messages) + "\n")
