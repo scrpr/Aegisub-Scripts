@@ -1,7 +1,7 @@
 script_name = ("Pangu - 自动插入空白")
 script_description = ("自动在选中行中将所有的中文与半角英文、数字、符号之间插入空白")
 script_author = "Scrpr"
-script_version = "4"
+script_version = "4-fix"
 
 re = require 'aegisub.re'
 unicode = require 'aegisub.unicode'
@@ -56,7 +56,8 @@ S_A = re.compile([[(%)([A-Za-z])]])
 
 MIDDLE_DOT = re.compile([[((?:[ ]|]]..SPACE_SPACED..[[)*)([·•‧])((?:[ ]|]]..SPACE_SPACED..[[)*)]])
 
-INLINE_TAGS = re.compile('(?:[ ]|'..SPACE_SPACED..')*(\\\\[Nnh])(?:[ ]|'..SPACE_SPACED..')*')
+INLINE_TAGS = re.compile('(\\\\[Nnh])(?:[ ]|'..SPACE_SPACED..')*')
+INLINE_TAGS_BEFORE = re.compile('(?:[ ]|'..SPACE_SPACED..')*(\\\\[Nnh])')
 
 function convertToFullWidth_CJK(symbols)
     --- aegisub.debug.out("Processing symbol"..symbols.."\n")
@@ -183,13 +184,15 @@ function spacing(text)
     --- aegisub.debug.out("MIDDLE_DOT"..new_text.."\n")
     new_text = INLINE_TAGS:sub(new_text, "\\1")
 
+    new_text = INLINE_TAGS_BEFORE:sub(new_text, "\\1")
+
     return new_text
 end
 
 
 
 function processing(subtitles, selected_lines, active_line)
-    ASS_TAGS = re.compile([[(?:\{.*?\})([^\{]+)]])
+    ASS_TAGS = re.compile([[[^\{\}]*(?=(?:[^\}]*\{[^\{]*\})*[^\{\}]*$)]])
     LAST_PROCESSED = re.compile(CUSTOM_SPACE)
     ADD_CUSTOM = re.compile(SPACE.."?")
     for z, i in ipairs(selected_lines) do
